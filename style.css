@@ -1,0 +1,35 @@
+/* Variables pour les thèmes de couleurs (souvent 4 couleurs par plus) */
+:root {
+  --color1: rgb(227, 248, 202);
+  --color2: rgb(231, 145, 205);
+  --color3: rgb(149, 144, 241);
+  --color4: rgb(145, 231, 181);
+}
+
+* {
+  /* Pour enlever tous les margin et padding de tous les éléments */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Aide à mieux arranger nos boîtes */
+}
+
+body {
+  background: url(./sunrise.png) center/cover; /* Pour que ça couvre la largeur */
+  height: 100vh; /* Pour que ça couvre toute la hauteur du body = tu fais 100% de la taille que l'utilisateur a*/
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--color1);
+  display: flex;
+  align-items: center;
+  /* La suite ne fait rien, car la div est en display: block */
+  justify-content: center;
+}
+
+.card {
+  background: rgba(0, 0, 0, 0.258);
+  /* Méthode qui fait des calculs: ici taille max moins 50px de chaque côté :*/
+  width: calc(100% - 50px);
+  padding: 20px 20px 6px; /* haut (gauche et droite) bas */
+  box-shadow: 0px 0px 11px 6px rgba(0, 0, 0, 0.662);
+  border-radius: 6px;
+  backdrop-filter: blur(5px);
+}
