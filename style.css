@@ -4,6 +4,7 @@
   --color2: rgb(231, 145, 205);
   --color3: rgb(149, 144, 241);
   --color4: rgb(145, 231, 181);
+  --color5: rgb(238, 22, 22);
 }
 
 * {
@@ -62,7 +63,9 @@ h1 {
   /* propriété pour ombre du polygone: */
   filter: drop-shadow(1px 15px 3px #fadc7881);
   /* Pour centrer l'enfant, comme ci-après, il faut mettre le parent en grid: place-self: center; */
+  /* place-self: center left; */
   place-self: center left;
+ 
 }
 
 .polygon {
@@ -77,20 +80,70 @@ h1 {
 }
 
 .polygon::after {
-  content: "Un texte";
+  content: "CSS 3";
   position: absolute;
-  color: var(--color2);
-  background: #d74a23;
+  color: var(--color5);
+  font-weight: 500;
+  /* background: #e2ed1529; */
   /* La, l'élément sera centré par rapport à son coin haut gauche */
   top: 50%;
   left: 50%;
   /* Pour centre par rapport au centre de l'élément: */
-  transform: translate(-50%, -50%) rotate(90deg);
+  transform: translate(-50%, -50%) rotate(360deg);
   width: 90px;
   padding: 4px;
   text-align: center;
 }
 
-/* vidéo : 47:34 */
+p {
+  line-height: 28px;
+  margin: 20px 0;
+  /* Méthode assez récente: webkit */
+  /* S on souhaite que notre paragraphe face 20 lignes quoi qu'il en soit (pour ne pas bouger toute la page */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  /* VScode demande d'écrire tout de même la proriété: line-clamp: */
+  line-clamp: 4;
+  overflow: hidden;
+  text-align: justify;
+}
 
+/* Pour changer la couleur de la sélection du texte: */
+p::selection {
+  background: #f091044b;
+  color: rgb(0, 0, 0);
+}
+
+.checkbox-container {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 20px 0 30px;
+  /* haut dr/gche bas */
+}
+
+/* Pour enlever la case cochée de la checkbox */
+input[type="checkbox"] {
+  display: none;
+}
+
+/* Quand l'input est coché, tu m'appliques le style du label qui suit: */
+input[type="checkbox"]:checked + label {
+background: rgba(156, 134, 243, 0.39);
+transform: scale(1.1);
+}
+/* Quand l'input est coché, tu m'appliques le style de tous labels qui suivent: */
+/* input[type="checkbox"]:checked ~ label {
+background: var(--color3);
+} */
+
+label {
+  user-select: none;
+  cursor: pointer;
+  border: 1px solid var(--color4);
+  padding: 10px;
+  border-radius: 10px;
+  /* Mettre les animations sur les labels pour l'avoir en entrée et en sortie */
+  transition: 0.2s;
+}
 
