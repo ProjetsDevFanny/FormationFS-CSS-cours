@@ -14,8 +14,9 @@
 }
 
 body {
-  background: url(./sunrise.png) center/cover; /* Pour que ça couvre la largeur */
+  background: url(/assets/sunrise.png) center/cover; /* Pour que ça couvre la largeur */
   height: 100vh; /* Pour que ça couvre toute la hauteur du body = tu fais 100% de la taille que l'utilisateur a*/
+  /* POUR LES WIDTH = EN % ! */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: var(--color1);
   display: flex;
@@ -31,5 +32,65 @@ body {
   padding: 20px 20px 6px; /* haut (gauche et droite) bas */
   box-shadow: 0px 0px 11px 6px rgba(0, 0, 0, 0.662);
   border-radius: 6px;
+  /* Filtre flou derrière : */
   backdrop-filter: blur(5px);
 }
+
+.card::before {
+  /* Toujours un content avec before et after ! */
+  /* Insertion d'une icône depuis site "HTML Symbols" */
+  content: "\2606";
+  position: absolute;
+  top: -2px;
+  right: 10px;
+  /* Pour agrandir l'icône: */
+  font-size: 2rem;
+}
+
+h1 {
+  /* Détache le titre du texte: */
+  margin-bottom: 21px;
+}
+
+.grid-container {
+  display: grid;
+   /* POUR LES WIDTH = EN % ! */
+  grid-template-columns: 20% 80%;
+}
+
+.polygon-container {
+  /* propriété pour ombre du polygone: */
+  filter: drop-shadow(1px 15px 3px #fadc7881);
+  /* Pour centrer l'enfant, comme ci-après, il faut mettre le parent en grid: place-self: center; */
+  place-self: center left;
+}
+
+.polygon {
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  /* Gradient de couleur: direction: 135deg, on commence à jaune et on fini à rouge: il vaut mieux rester en 2 couleurs slmt */
+  /* background: linear-gradient(135deg, var(--color2) 0%, var(--color3) 100%); */
+  background-image: linear-gradient(-20deg, #fadc78 10%, #d74a23 80%);
+  height: 100px;
+  /* On ne peut pas donner d'ombre directement au polygone: il faudra passer par son parent et une propriété différente */
+  /* En grid, dans tous les cas, les éléments font width: 100%, c'est moche */
+  width: 100px;
+}
+
+.polygon::after {
+  content: "Un texte";
+  position: absolute;
+  color: var(--color2);
+  background: #d74a23;
+  /* La, l'élément sera centré par rapport à son coin haut gauche */
+  top: 50%;
+  left: 50%;
+  /* Pour centre par rapport au centre de l'élément: */
+  transform: translate(-50%, -50%) rotate(90deg);
+  width: 90px;
+  padding: 4px;
+  text-align: center;
+}
+
+/* vidéo : 47:34 */
+
+
