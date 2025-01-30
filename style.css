@@ -51,7 +51,25 @@ body {
 h1 {
   /* Détache le titre du texte: */
   margin-bottom: 21px;
+  /* Pour positionner la barre : */
+  position: relative;
 }
+
+/* Méthode pour créer une barre: */
+h1::after {
+  /* Toujours "content" et "position: absolute" ! */
+  content: "";
+  position: absolute;
+  background:  var(--color1);
+  height: 1px;
+  width: 100%;
+  bottom: -14px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  /* scaleX(0)= sur sa largeur, donc là on ne la voit pas */
+}
+
+/* video 1:36 */
 
 .grid-container {
   display: grid;
@@ -179,7 +197,7 @@ input[type="text"]:focus {
 }
 
 input[type="text"]::placeholder {
-  color: var(--color3);
+  color: var(--color2);
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
@@ -193,7 +211,8 @@ button {
   padding: 10px 20px;
   border-radius: 50px;
   /* Centrage du bouton: attention il est en display: inline-block !(= il est centré dans la zone dans laquelle il est surbrillé, dans l'inspecteur) donc "margin:0 auto" ne marche pas ! Donc il faut qu'il soit en "inline:block" = Cf inspecter pour votre sa zone de surbrillance */
-  margin: 0 auto;
+  margin: 0 auto; /* haut/bas droite/gauche */
+  /* Si 3 valeurs : margin: 2px 3px 4px = haut gche/droite bas */
   display: block;
   /* Attention la transition dans le button et pas dans le hover, pour avoir aussi l'effet quand on sort */
   transition: 0.5s;
@@ -203,4 +222,30 @@ button:hover {
   letter-spacing: 2px;
 }
 
-/* vidéo: 1:20 */
+/* Quand on clic sur le button: */
+button:active {
+  transform: scale(1.2);
+}
+
+button:hover + a,
+a:hover {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+a {
+  color: var(--color2);
+  text-align: center;
+  display: block;
+  margin: 20px 0px;
+  font-size: 0.8rem;
+  opacity: 0.2;
+  transform: translateY(20px);
+  transition: 0.5s;
+}
+
+a:hover {
+  color: whitesmoke;
+}
+
+
