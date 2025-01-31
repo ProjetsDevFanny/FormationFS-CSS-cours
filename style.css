@@ -1,22 +1,25 @@
 /* Variables pour les thèmes de couleurs (souvent 4 couleurs par plus) */
 :root {
   --color1: rgb(227, 248, 202);
-  --color2: rgb(231, 145, 205);
-  --color3: rgb(149, 144, 241);
-  --color4: rgb(145, 231, 181);
-  --color5: rgb(238, 22, 22);
+  --color2: rgb(239, 156, 120);
+  --color3: rgb(240, 119, 67);
+  --color4: rgb(165, 114, 91);
+  --color5: rgb(255, 255, 255);
 }
 
 * {
   /* Pour enlever tous les margin et padding de tous les éléments */
   margin: 0;
   padding: 0;
-  box-sizing: border-box; /* Aide à mieux arranger nos boîtes */
+  box-sizing: border-box;
+  /* Aide à mieux arranger nos boîtes */
 }
 
 body {
-  background: url(/assets/sunrise.png) center/cover; /* Pour que ça couvre la largeur */
-  height: 100vh; /* Pour que ça couvre toute la hauteur du body = tu fais 100% de la taille que l'utilisateur a*/
+  background: url(/assets/sunrise.png) center/cover;
+  /* Pour que ça couvre la largeur */
+  height: 100vh;
+  /* Pour que ça couvre toute la hauteur du body = tu fais 100% de la taille que l'utilisateur a*/
   /* POUR LES WIDTH = EN % ! */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: var(--color1);
@@ -24,20 +27,23 @@ body {
   align-items: center;
   /* La suite ne fait rien, car la div est en display: block */
   justify-content: center;
+  /* Pour empêcher l'apparition d'une scroll barre quand la feuille sort à droite du body: */
+  overflow: hidden;
 }
 
 .card {
   background: rgba(0, 0, 0, 0.258);
   /* Méthode qui fait des calculs: ici taille max moins 50px de chaque côté :*/
   width: calc(100% - 50px);
-  padding: 20px 20px 6px; /* haut (gauche et droite) bas */
+  padding: 20px 20px 6px;
+  /* haut (gauche et droite) bas */
   box-shadow: 0px 0px 11px 6px rgba(0, 0, 0, 0.662);
   border-radius: 6px;
   /* Filtre flou derrière : */
   backdrop-filter: blur(5px);
 }
 
-.card::before {
+.card::before:hover {
   /* Toujours un content avec before et after ! */
   /* Insertion d'une icône depuis site "HTML Symbols" */
   content: "\2606";
@@ -60,20 +66,30 @@ h1::after {
   /* Toujours "content" et "position: absolute" ! */
   content: "";
   position: absolute;
-  background:  var(--color1);
+  background: var(--color1);
   height: 1px;
   width: 100%;
   bottom: -14px;
   left: 50%;
   transform: translateX(-50%) scaleX(0);
   /* scaleX(0)= sur sa largeur, donc là on ne la voit pas */
+  animation: h1anim 8s ease-in-out forwards;
+  /* Forwards= pour que l'animation reste à la fin 
+  Ease in out = lent au début à la fin , accèlère au milieu*/
+  /* Pour que l'animation commence à gauche: */
+  /* transform-origin: left; */
 }
 
-/* video 1:36 */
+@keyframes h1anim {
+  100% {
+    /* Il faut remettre le "translateX(-50%)" sinon, il est écrasé */
+    transform: translateX(-50%) scaleX(1);
+  }
+}
 
 .grid-container {
   display: grid;
-   /* POUR LES WIDTH = EN % ! */
+  /* POUR LES WIDTH = EN % ! */
   grid-template-columns: 20% 80%;
 }
 
@@ -83,7 +99,7 @@ h1::after {
   /* Pour centrer l'enfant, comme ci-après, il faut mettre le parent en grid: place-self: center; */
   /* place-self: center left; */
   place-self: center left;
- 
+
 }
 
 .polygon {
@@ -138,6 +154,8 @@ p::selection {
   justify-content: space-evenly;
   margin: 20px 0 30px;
   /* haut dr/gche bas */
+  perspective: 50px;
+  /* Elle va de 0 à 1000px: plus c'est petit plus perspective est grande et inversement. */
 }
 
 /* Pour enlever la case cochée de la checkbox */
@@ -146,12 +164,14 @@ input[type="checkbox"] {
 }
 
 /* Quand l'input est coché, tu m'appliques le style du label qui suit: */
-input[type="checkbox"]:checked + label {
-background: rgba(156, 134, 243, 0.39);
-/* background-image: linear-gradient(-20deg, #fadc78 10%, #d74a23 80%); */
-transform: scale(1.1);
-filter: brightness(105%) /* blur(5px); */
+input[type="checkbox"]:checked+label {
+  background: rgba(156, 134, 243, 0.39);
+  /* background-image: linear-gradient(-20deg, #fadc78 10%, #d74a23 80%); */
+  transform: scale(1.1);
+  filter: brightness(105%)
+    /* blur(5px); */
 }
+
 /* Quand l'input est coché, tu m'appliques le style de tous labels qui suivent: */
 /* input[type="checkbox"]:checked ~ label {
 background: var(--color3);
@@ -166,6 +186,45 @@ label {
   transition: 0.2s;
   /* Utilisateur ne peut pas sélectionner le texte. */
   user-select: none;
+}
+
+/* "Animation au hover, que sur le 1er label slmt: avec: label:first-of-type:hover { */
+
+label:hover {
+  animation: label1 1s infinite linear;
+  /* linear: effet plus doux */
+}
+
+@keyframes label1 {
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* On vise le 4ème enfant de "checkbox-container" (voir l'inspecteur)*/
+label:nth-child(4):hover {
+  animation: label2 2s infinite linear forwards;
+}
+
+/* effet 3D: */
+/* Ne pas oublier de mettre la perspective au parent: ici "checkbox-container" ! */
+@keyframes label2 {
+  33% {
+    transform: translateZ(30px);
+  }
+
+  66% {
+    transform: translateZ(-20px);
+    /* chiffre négatif: élément s'éloigne de nous */
+  }
+
+  100% {
+    transform: translateZ(0);
+  }
 }
 
 .e-mail {
@@ -198,20 +257,21 @@ input[type="text"]:focus {
 
 input[type="text"]::placeholder {
   color: var(--color2);
-  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 button {
   cursor: pointer;
-  background: var(--color2)  ;
-  color: rgb(99, 15, 94);
+  background: var(--color2);
+  color: var(--color5);
   border: none;
   font-size: 1.3rem;
-  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   padding: 10px 20px;
   border-radius: 50px;
   /* Centrage du bouton: attention il est en display: inline-block !(= il est centré dans la zone dans laquelle il est surbrillé, dans l'inspecteur) donc "margin:0 auto" ne marche pas ! Donc il faut qu'il soit en "inline:block" = Cf inspecter pour votre sa zone de surbrillance */
-  margin: 0 auto; /* haut/bas droite/gauche */
+  margin: 0 auto;
+  /* haut/bas droite/gauche */
   /* Si 3 valeurs : margin: 2px 3px 4px = haut gche/droite bas */
   display: block;
   /* Attention la transition dans le button et pas dans le hover, pour avoir aussi l'effet quand on sort */
@@ -227,10 +287,13 @@ button:active {
   transform: scale(1.2);
 }
 
-button:hover + a,
+button:hover+a,
 a:hover {
   opacity: 1;
   transform: translateY(0);
+  /* Pour enlever le petit bug sur le lien */
+   /* Ajouter aussi dans a = visibility: hidden; */
+  visibility: visible;
 }
 
 a {
@@ -242,10 +305,77 @@ a {
   opacity: 0.2;
   transform: translateY(20px);
   transition: 0.5s;
+  visibility: hidden;
 }
 
 a:hover {
   color: whitesmoke;
 }
 
+/* Paramètrage de la feuille */
+/* Elle est a côté de la card, car elle est en flex */
+img {
+  height: 50px;
+  position: absolute;
+  filter: drop-shadow(0px 6px 3px rgba(202, 164, 40, 0.571));
+  /* z-index: -1; */
+  animation: leaf-trip 15s infinite linear;
+}
 
+@keyframes leaf-trip {
+  0% {
+    top: 2%;
+    left: 2%;
+    transform: rotate(90deg);
+}
+10% {
+    top: 6%;
+    left: 30%;
+    transform: rotate(0deg);
+}
+20% {
+    top: 9%;
+    left: 60%;
+    transform: rotate(-40deg);
+}
+30% {
+    top: 0%;
+    left: 80%;
+    transform: rotate(-50deg);
+}
+40% {
+    top: 20%;
+    left: 102%;
+    transform: rotate(80deg);
+}
+50% {
+    top: 50%;
+    left: 90%;
+    transform: rotate(30deg);
+}
+60% {
+    top: 60%;
+    left: 80%;
+    transform: rotate(312deg);
+}
+70% {
+    top: 80%;
+    left: 60%;
+    transform: rotate(263deg);
+}
+80% {
+    top: 60%;
+    left: 50;
+    transform: rotate(200deg);
+}
+90% {
+    top: 40%;
+    left: 30;
+    transform: rotate(10deg);
+}
+100% {
+    top: 2%;
+    left: 2%;
+    transform: rotate(90deg);
+}
+}
